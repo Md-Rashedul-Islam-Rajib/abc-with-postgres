@@ -27,6 +27,15 @@ app.get('/books', async(req,res)=>{
         res.json({error: error.message})
     }
 })
+app.get('/books/:id', async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const book = await pool.query("SELECT * FROM book WHERE id=$1", [id]);
+        res.status(200).json({message: 'book returned', data: book.rows})
+    } catch (error) {
+        res.json({error: error.message})
+    }
+})
 
 
 app.get('/', (req,res)=> {

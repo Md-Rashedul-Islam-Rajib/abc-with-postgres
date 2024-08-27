@@ -19,6 +19,15 @@ app.post('/books', async (req,res)=> {
     }
 })
 
+app.get('/books', async(req,res)=>{
+    try {
+        const books = await pool.query("SELECT * FROM book");
+        res.status(200).json({message: 'book returned', data: books.rows})
+    } catch (error) {
+        res.json({error: error.message})
+    }
+})
+
 
 app.get('/', (req,res)=> {
     res.send('Server running successfully')
